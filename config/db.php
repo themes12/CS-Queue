@@ -1,5 +1,6 @@
 <?php
 require_once 'config.php';
+date_default_timezone_set("Asia/Bangkok");
 class Database extends Config {
     public function readAll() {
         $sql = "SELECT * FROM rooms ORDER BY name";
@@ -60,11 +61,12 @@ class Database extends Config {
     }
 
     public function updateAvailable(int $id, int $num) {
-        $sql = "UPDATE rooms SET available = :available WHERE id = :id";
+        $sql = "UPDATE rooms SET available = :available, last_updated = :last_updated WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $id,
-            'available' => $num
+            'available' => $num,
+            'last_updated' => date('Y-m-d H:i:s')
         ]);
 
         return true;

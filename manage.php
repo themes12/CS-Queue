@@ -14,7 +14,7 @@ $result = $db->readOne($_GET["room"]);
 ?>
 <div class="container my-4 has-text-centered"> 
     <h3 class="title is-3">ห้อง <?php echo $result["name"] ?></h3>
-    <h4 class="subtitle is-4">กิจกรรม <?php echo $result["activity"] ?> (สูงสุด <?php echo $result["maximum"] ?> คน)</h4>
+    <h4 class="subtitle is-4">กิจกรรม <?php echo $result["activity"] ?></h4>
     <h5 class="subtitle is-5" id="in-queue">จำนวนคนในคิวขณะนี้ <?php echo $result['in_queue'] ?></h5>
     <div class="content is-medium">
         <div class="columns">

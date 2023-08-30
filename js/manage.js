@@ -52,11 +52,12 @@ async function updateAvailable(id, num) {
 
 // update text คนใน queue
 function updateInQueue(data) {
-    $("#in-queue").html(`จำนวนคนในคิวขณะนี้ ${data.in_queue}`)
+    $("#in-queue").html(`จำนวนคนในคิวขณะนี้ ${data.in_queue} ${data.status === 1 && data.available > 0 ? `<span class="tag is-success is-medium">ว่าง ${data.available} คน</span>` : `<span class="tag is-danger is-medium">ไม่ว่าง</span>`}`)
 }
 
 function updateStatus(data) {
     $("status").val(data.status);
+    updateInQueue(data)
     if(data.status === 1) {
         $("#available").attr("disabled", false)
         $("#available-btn").attr("disabled", false)
@@ -128,7 +129,7 @@ $("#add-queue-btn").on("click", async function () {
     $("#add-queue").val('')
 });
 
-// เอาคนออกคิว
+// // เอาคนออกคิว
 $("#dequeue-btn").on("click", async function () {
     const id = getRoomId()
     const num = $("#dequeue").val();
@@ -153,20 +154,22 @@ $("#dequeue-btn").on("click", async function () {
 $("#available-btn").on("click", async function () {
     const id = getRoomId()
     const num = $("#available").val();
-
-    if(num < 1) {
-        alert("จำนวนคนต้องมากกว่า 1")
+    
+    if(!$("#available-btn").prop("disabled")){
+        if(num < 1) {
+            alert("จำนวนคนต้องมากกว่า 1")
+            $("#available").val('')
+            return
+        }
+    
+        if(confirm(`ยืนยันจำนวนคนในห้องว่างขณะนี้ ${num} คน`) === false) {
+            $("#available").val('')
+            return
+        }
+    
+        await updateAvailable(id, num);
+        const response = await readOne(id);
+        updateStatus(response);
         $("#available").val('')
-        return
     }
-
-    if(confirm(`ยืนยันจำนวนคนในห้องว่างขณะนี้ ${num} คน`) === false) {
-        $("#available").val('')
-        return
-    }
-
-    await updateAvailable(id, num);
-    const response = await readOne(id);
-    updateStatus(response);
-    $("#available").val('')
 });
