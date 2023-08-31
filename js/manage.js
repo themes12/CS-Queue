@@ -66,7 +66,7 @@ async function updateStatusDB(id) {
 // }
 
 function updateInQueue(data) {
-    $("#in-queue").html(`จำนวนคนในคิวขณะนี้ ${data.in_queue} ${data.status === 1 ? `<span class="tag is-success is-medium">ว่าง</span>` : `<span class="tag is-danger is-medium">ไม่ว่าง</span>`}`)
+    $("#in-queue").html(`จำนวนคนในคิวขณะนี้ <span style="color: red;">${data.in_queue}</span> ${data.status === 1 ? `<span class="tag is-success is-medium">ว่าง</span>` : `<span class="tag is-danger is-medium">ไม่ว่าง</span>`}`)
 }
 
 // function updateStatus(data) {
