@@ -18,6 +18,18 @@ $result = $db->readOne($_GET["room"]);
     <h1 class="title is-1" id="in-queue">จำนวนคนในคิวขณะนี้ <span style="color: red;"><?php echo $result['in_queue'] ?></span></h1>
     <div class="content is-medium">
         <div class="columns">
+            <div class="column is-full">
+            <p>เปิด/ปิดกิจกรรม</p>
+                <div class="field has-addons has-addons-centered">
+                    <input type="hidden" id="open" value="<?php echo $result["open"] ?>">
+                    <div class="buttons has-addons">
+                        <button class="button" id="is-open" onclick="toggleOpen()">เปิด</button>
+                        <button class="button" id="is-not-open" onclick="toggleOpen()">ปิด</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
             <div class="column is-6">
                 <p>จำนวนคนในห้องว่าง (สำหรับ Staff ในห้อง)</p>
                 <div class="field has-addons has-addons-centered">

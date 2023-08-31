@@ -66,7 +66,7 @@ $(document).ready(async function() {
         console.log("reload")
         const response = await readAll();
         createElement(response)
-    }, 3000);
+    }, 5000);
 });
 
 // เพิ่มเข้าคิว
@@ -199,7 +199,7 @@ function createRoom(data) {
         <a href="manage.php?room=${data.id}">
             <div class="box room-box">
                 <div class="content">
-                    <h3 class="title is-3">${data.name}</h3>
+                    <h3 class="title is-3">${data.name} ${data.open === 0 ? `<span style="color: red;">(กิจกรรมปิดอยู่)</span>` : ''}</h3>
                     <h4 class="subtitle is-4">${data.activity}</h4>
                     <div class="columns content is-medium">
                         <div class="column is-full">

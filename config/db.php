@@ -21,6 +21,12 @@ class Database extends Config {
     }
 
     public function updateQueue(int $id, int $num) {
+        $result = $this->readOne($id);
+
+        if($result["open"] === 0) {
+            return true;
+        }
+
         $sql = "UPDATE rooms SET in_queue = :num WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
@@ -60,6 +66,11 @@ class Database extends Config {
 
     public function updateStatus(int $id) {
         $result = $this->readOne($id);
+
+        if($result["open"] === 0) {
+            return true;
+        }
+
         if($result["status"] === 0) {
             $num = 0;
             if($result["in_queue"] < $result["maximum"]){
@@ -89,6 +100,19 @@ class Database extends Config {
             return true;
         }
 
+    }
+
+    public function updateOpenClose(int $id) {
+        $result = $this->readOne($id);
+        $open = $result["open"] === 1 ? 0 : 1;
+
+        $sql = "UPDATE rooms SET open = :open, status = 0 WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'open' => $open,
+            'id' => $id
+        ]);
+        return true;
     }
 
     // public function updateAvailable(int $id, int $num) {

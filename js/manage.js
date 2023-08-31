@@ -19,6 +19,15 @@ async function updateQueue(id, num) {
     return $.post("api/api.php", data);
 }
 
+async function updateOpenCloseDB(id) {
+    const data = {
+        "updateOpenClose" : 1,
+        "id": id
+    }
+
+    return $.post("api/api.php", data);
+}
+
 // ใช้ ajax ส่งค่าไปเพิ่มคน
 // async function updateIncrementQueue(id, num) {
 //     const data = {
@@ -85,20 +94,47 @@ function updateInQueue(data) {
 //     }
 // }
 
-function updateStatus(data) {
-    $("status").val(data.status);
-    updateInQueue(data)
-    if(data.status === 1) {
-        // $("#available").attr("disabled", false)
-        // $("#available-btn").attr("disabled", false)
-        $("#available-status").addClass("is-selected is-success")
-        $("#not-available-status").removeClass("is-selected is-danger")
+function updateOpenClose(data) {
+    $("#open").val(data.open);
+    if(data.open === 1) {
+        $("#is-open").addClass("is-selected is-link")
+        $("#is-not-open").removeClass("is-selected is-warning")
     }else {
-        // $("#available").attr("disabled", true)
-        // $("#available-btn").attr("disabled", true)
+        $("#is-open").removeClass("is-selected is-link")
+        $("#is-not-open").addClass("is-selected is-warning")
+    }
+}
+
+function updateStatus(data) {
+    $("#status").val(data.status);
+    updateInQueue(data)
+
+    if(data.open === 0) {
+        $("#available-status").attr("disabled", true)
+        $("#not-available-status").attr("disabled", true)
+        $("#add-queue").attr('disabled', true)
+        $("#add-queue-btn").attr('disabled', true)
         $("#available-status").removeClass("is-selected is-success")
         $("#not-available-status").addClass("is-selected is-danger")
+    }else {
+        $("#available-status").attr("disabled", false)
+        $("#not-available-status").attr("disabled", false)
+        $("#add-queue").attr('disabled', false)
+        $("#add-queue-btn").attr('disabled', false)
+        if(data.status === 1) {
+            // $("#available").attr("disabled", false)
+            // $("#available-btn").attr("disabled", false)
+            $("#available-status").addClass("is-selected is-success")
+            $("#not-available-status").removeClass("is-selected is-danger")
+        }else {
+            // $("#available").attr("disabled", true)
+            // $("#available-btn").attr("disabled", true)
+            $("#available-status").removeClass("is-selected is-success")
+            $("#not-available-status").addClass("is-selected is-danger")
+        }
     }
+
+    
 }
 
 // get room id from get parameter (?room=7)
@@ -112,14 +148,21 @@ function getRoomId() {
 }
 
 async function toggleStatus() {
-    console.log("click")
     const id = getRoomId()
-    const status = $("#status").val();
-    $("#status").val(!status)
+    // const status = $("#status").val();
+    // $("#status").val(!status)
     await updateStatusDB(id)
     // await updateAvailable(id, 0)
     const response = await readOne(id);
     updateStatus(response);
+}
+
+async function toggleOpen() {
+    const id = getRoomId()
+    await updateOpenCloseDB(id)
+    const response = await readOne(id);
+    updateOpenClose(response);
+    updateStatus(response)
 }
 
 // document ready read room's data
@@ -128,13 +171,15 @@ $(document).ready(async function() {
     const response = await readOne(id);
     updateInQueue(response);
     updateStatus(response);
+    updateOpenClose(response)
 
     setInterval(async function () {
         console.log("reload")
         const response = await readOne(id);
         updateInQueue(response);
         updateStatus(response);
-    }, 3000);
+        updateOpenClose(response)
+    }, 5000);
 });
 
 // เพิ่มเข้าคิว
@@ -142,21 +187,24 @@ $("#add-queue-btn").on("click", async function () {
     const id = getRoomId()
     const num = $("#add-queue").val();
 
-    if(num < 1) {
-        alert("จำนวนคนต้องมากกว่า 1")
-        $("#add-queue").val('')
-        return
-    }
+    if(parseInt($("#open").val()) !== 0){
 
-    if(confirm("ยืนยันการเพิ่มคนเข้าคิว") === false) {
-        $("#add-queue").val('')
-        return
-    }
+        if(num < 0) {
+            alert("จำนวนคนต้องมากกว่า 0")
+            $("#add-queue").val('')
+            return
+        }
 
-    await updateQueue(id, num);
-    const response = await readOne(id);
-    updateInQueue(response);
-    $("#add-queue").val('')
+        if(confirm("ยืนยันการเพิ่มคนเข้าคิว") === false) {
+            $("#add-queue").val('')
+            return
+        }
+
+        await updateQueue(id, num);
+        const response = await readOne(id);
+        updateInQueue(response);
+        $("#add-queue").val('')
+    }
 });
 
 // $("#add-queue-btn").on("click", async function () {

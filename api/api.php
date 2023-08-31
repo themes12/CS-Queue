@@ -61,6 +61,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $util->returnJsonHttpResponse(true, $result);
     }
 
+    if(isset($_POST["updateOpenClose"])) {
+        if(!$util->checkId($_POST["id"])) {
+            $util->returnJsonHttpResponse(false, [
+                "message" => "missing parameter."
+            ]);
+        }
+        $result = $db->updateOpenClose($_POST["id"]);
+        $util->returnJsonHttpResponse(true, $result);
+    }
+
     if(isset($_POST["updateQueue"])) {
         if(!$util->checkId($_POST["id"]) || !$util->checkNum($_POST["num"])) {
             $util->returnJsonHttpResponse(false, [
