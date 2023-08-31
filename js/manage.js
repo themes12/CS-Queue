@@ -134,7 +134,7 @@ $(document).ready(async function() {
         const response = await readOne(id);
         updateInQueue(response);
         updateStatus(response);
-    }, 7500);
+    }, 3000);
 });
 
 // เพิ่มเข้าคิว

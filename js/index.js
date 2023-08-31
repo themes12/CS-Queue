@@ -66,7 +66,7 @@ $(document).ready(async function() {
         console.log("reload")
         const response = await readAll();
         createElement(response)
-    }, 7500);
+    }, 3000);
 });
 
 // เพิ่มเข้าคิว
