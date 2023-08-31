@@ -27,7 +27,7 @@ $result = $db->readOne($_GET["room"]);
                         <button class="button" id="not-available-status" onclick="toggleStatus()">ไม่ว่าง</button>
                     </div>
                 </div>
-                <div class="field has-addons has-addons-centered">
+                <!-- <div class="field has-addons has-addons-centered">
                     <div class="control">
                         <input class="input" type="number" id="available" min="0" placeholder="จำนวนคนในห้องว่าง" required>
                     </div>
@@ -36,21 +36,21 @@ $result = $db->readOne($_GET["room"]);
                         Submit
                         </a>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="column is-6">
                 <p>Queue (สำหรับ Staff นอกห้อง)</p>
                 <div class="field has-addons has-addons-centered">
                     <div class="control">
-                        <input class="input" id="add-queue" type="number" min="0" placeholder="เพิ่มคนในคิว" required>
+                        <input class="input" id="add-queue" type="number" min="0" placeholder="จำนวนคนในคิว" required>
                     </div>
                     <div class="control">
                         <a class="button is-success" id="add-queue-btn">
-                        เพิ่ม
+                        ยืนยัน
                         </a>
                     </div>
                 </div>
-                <div class="field has-addons has-addons-centered">
+                <!-- <div class="field has-addons has-addons-centered">
                     <div class="control">
                         <input class="input" type="number" min="0" placeholder="ลดคนในคิว" id="dequeue" required>
                     </div>
@@ -59,7 +59,7 @@ $result = $db->readOne($_GET["room"]);
                         ลด
                         </a>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

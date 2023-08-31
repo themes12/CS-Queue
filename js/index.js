@@ -66,7 +66,7 @@ $(document).ready(async function() {
         console.log("reload")
         const response = await readAll();
         createElement(response)
-    }, 10000);
+    }, 7500);
 });
 
 // เพิ่มเข้าคิว
@@ -172,6 +172,27 @@ function createContainer(floor, column) {
 //     return template
 // }
 
+// function createRoom(data) {
+//     const template = `
+//     <div class="column is-4">
+//         <a href="manage.php?room=${data.id}">
+//             <div class="box room-box">
+//                 <div class="content">
+//                     <h3 class="title is-3">${data.name}</h3>
+//                     <h4 class="subtitle is-4">${data.activity}</h4>
+//                     <div class="columns content is-medium">
+//                         <div class="column is-full">
+//                             อยู่ในคิว ${data.in_queue} คน ${data.status === 1 && data.available > 0 ? `<span class="tag is-success is-medium">ว่าง ${data.available} คน</span>` : `<span class="tag is-danger is-medium">ไม่ว่าง</span>`}
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </a>
+//     </div>
+//     `
+//     return template
+// }
+
 function createRoom(data) {
     const template = `
     <div class="column is-4">
@@ -182,7 +203,7 @@ function createRoom(data) {
                     <h4 class="subtitle is-4">${data.activity}</h4>
                     <div class="columns content is-medium">
                         <div class="column is-full">
-                            อยู่ในคิว ${data.in_queue} คน ${data.status === 1 && data.available > 0 ? `<span class="tag is-success is-medium">ว่าง ${data.available} คน</span>` : `<span class="tag is-danger is-medium">ไม่ว่าง</span>`}
+                            อยู่ในคิว ${data.in_queue} คน ${data.status === 1 ? `<span class="tag is-success is-medium">ว่าง</span>` : `<span class="tag is-danger is-medium">ไม่ว่าง</span>`}
                         </div>
                     </div>
                 </div>

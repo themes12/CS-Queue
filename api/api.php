@@ -29,27 +29,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $util->returnJsonHttpResponse(true, $result);
     }
 
-    if(isset($_POST["updateIncrementQueue"])) {
-        if(!$util->checkId($_POST["id"]) || !$util->checkNum($_POST["num"])) {
-            $util->returnJsonHttpResponse(false, [
-                "message" => "missing parameter."
-            ]);
-        }
+    // if(isset($_POST["updateIncrementQueue"])) {
+    //     if(!$util->checkId($_POST["id"]) || !$util->checkNum($_POST["num"])) {
+    //         $util->returnJsonHttpResponse(false, [
+    //             "message" => "missing parameter."
+    //         ]);
+    //     }
 
-        $result = $db->updateIncrementQueue($_POST["id"], $_POST["num"]);
-        $util->returnJsonHttpResponse(true, $result);
-    }
+    //     $result = $db->updateIncrementQueue($_POST["id"], $_POST["num"]);
+    //     $util->returnJsonHttpResponse(true, $result);
+    // }
 
-    if(isset($_POST["updateDecrementQueue"])) {
-        if(!$util->checkId($_POST["id"]) || !$util->checkNum($_POST["num"])) {
-            $util->returnJsonHttpResponse(false, [
-                "message" => "missing parameter."
-            ]);
-        }
+    // if(isset($_POST["updateDecrementQueue"])) {
+    //     if(!$util->checkId($_POST["id"]) || !$util->checkNum($_POST["num"])) {
+    //         $util->returnJsonHttpResponse(false, [
+    //             "message" => "missing parameter."
+    //         ]);
+    //     }
 
-        $result = $db->updateDecrementQueue($_POST["id"], $_POST["num"]);
-        $util->returnJsonHttpResponse(true, $result);
-    }
+    //     $result = $db->updateDecrementQueue($_POST["id"], $_POST["num"]);
+    //     $util->returnJsonHttpResponse(true, $result);
+    // }
 
     if(isset($_POST["updateStatusDB"])) {
         if(!$util->checkId($_POST["id"])) {
@@ -61,14 +61,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $util->returnJsonHttpResponse(true, $result);
     }
 
-    if(isset($_POST["updateAvailable"])) {
+    if(isset($_POST["updateQueue"])) {
         if(!$util->checkId($_POST["id"]) || !$util->checkNum($_POST["num"])) {
             $util->returnJsonHttpResponse(false, [
                 "message" => "missing parameter."
             ]);
         }
-        $result = $db->updateAvailable($_POST["id"], $_POST["num"]);
+        $result = $db->updateQueue($_POST["id"], $_POST["num"]);
         $util->returnJsonHttpResponse(true, $result);
     }
+
+    // if(isset($_POST["updateAvailable"])) {
+    //     if(!$util->checkId($_POST["id"]) || !$util->checkNum($_POST["num"])) {
+    //         $util->returnJsonHttpResponse(false, [
+    //             "message" => "missing parameter."
+    //         ]);
+    //     }
+    //     $result = $db->updateAvailable($_POST["id"], $_POST["num"]);
+    //     $util->returnJsonHttpResponse(true, $result);
+    // }
 }
 ?>
